@@ -1,9 +1,14 @@
+import { useEffect } from "react";
+
 const Home = () => {
+  useEffect(()=> {
+
+  },[]);
+
   return (
-    <main>
-      <h1>Welcome</h1>
-     
-    </main>
+    <>
+      <div>Welcome</div>     
+    </>
   );
 };
 
