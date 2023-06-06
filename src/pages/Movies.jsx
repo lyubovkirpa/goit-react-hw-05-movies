@@ -4,12 +4,14 @@ import SearchBar from "components/SearchBar/SearchBar";
 import fetchMovies from "servises/fetchMovies";
 import MovieList from "components/MovieList/MovieList";
 import toast, { Toaster } from 'react-hot-toast';
+import { RotatingLines } from 'react-loader-spinner';
 
 const Movies = () => {
   const [moviesSearch, setMoviesSearch] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState('');
   const query = searchParams.get('query') ?? '';
+  const [load, setLoad] = useState(false);
 
 
   useEffect(()=> {
@@ -17,8 +19,11 @@ const Movies = () => {
       if(query === '') {
         return;
       }
+      setLoad(true);
       try {
-        const dataMovies = await fetchMovies(`https://api.themoviedb.org/3/search/movie?api_key=9218a8fe57d9a10810e7b861ea45534f&language=en-US&query=${query}&page=1&include_adult=false`)
+        const dataMovies = await fetchMovies(
+          `https://api.themoviedb.org/3/search/movie?api_key=9218a8fe57d9a10810e7b861ea45534f&language=en-US&query=${query}&page=1&include_adult=false`
+          );
       
         const movies = dataMovies.results;
 
@@ -63,6 +68,15 @@ const Movies = () => {
         />
       <MovieList movies={moviesSearch} />  
       </div>
+      {load && (
+          <RotatingLines
+            strokeColor="rgb(11, 127, 171)"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="96"
+            visible={true}
+          />
+        )}
     </section>
     <Toaster
         position="top-right"
