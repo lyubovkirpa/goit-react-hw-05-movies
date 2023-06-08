@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { Text, FilmLink, TrendItem } from './TrendingMovieList.styled';
 
@@ -25,3 +26,12 @@ const TrendingMovieList = ({ movies }) => {
 };
 
 export default TrendingMovieList;
+
+TrendingMovieList.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      original_title: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+};

@@ -2,6 +2,7 @@ import { useParams, Outlet, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import fetchMovies from "servises/fetchMovies";
 import MovieItem from "components/MovieItem/MovieItem";
+import { Toaster } from "react-hot-toast";
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
@@ -32,8 +33,17 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <MovieItem  movie={movie} />
-      
+       {movie && <MovieItem movie={movie} />}
+       <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            background: 'rgb(11, 127, 171)',
+            color: '#fff',
+          },
+        }}
+      />
       <Outlet />  
     </div>
   )

@@ -1,7 +1,10 @@
+import PropTypes from 'prop-types';
+import { Form, Input, Button } from './SearchBar.styled'; 
+
 const SearchBar = ({ handleSubmit, value, setInputValue }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
+    <Form onSubmit={handleSubmit}>
+      <Input 
       type="text"
       name="query"
       autoComplete="off"
@@ -9,9 +12,15 @@ const SearchBar = ({ handleSubmit, value, setInputValue }) => {
       value={value}
       onChange={event => setInputValue(event.target.value)}        
       />
-      <button type="submit">Search</button>
-    </form>
+      <Button type="submit">Search</Button>
+    </Form>
   );
 };
 
 export default SearchBar;
+
+SearchBar.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  setInputValue: PropTypes.func.isRequired,
+};

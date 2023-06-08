@@ -38,8 +38,10 @@ const Movies = () => {
       
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoad(false);
       }
-    }
+    };
 
   fetch(); 
 

@@ -1,4 +1,3 @@
-// import { NavLinks } from "react-router-dom";
 import { HeaderLinks, NavLinks } from './Header.styled';
 
 const Header = () => {
