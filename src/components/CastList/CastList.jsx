@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   ListActor,
   CardActor,
@@ -5,7 +6,7 @@ import {
   ActorName,
   Text,
 } from './CastList.styled';
-import { CiImageOff } from 'react-icons/ci';
+import placeholder from 'image/placeholder.jpg';
 
 const CastList = ({ actors }) => {
   return (
@@ -14,16 +15,16 @@ const CastList = ({ actors }) => {
         {actors.map(({ id, profile_path, name, character }) => {
           return (
             <CardActor key={id}>
-              {profile_path ? (
-                <ImageActor
-                  src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
-                  alt={name}
-                  width="150px"
-                  height="225px"
-                />
-              ) : (
-                <CiImageOff />
-              )}
+              <ImageActor
+                src={
+                  profile_path
+                    ? `https://image.tmdb.org/t/p/w500/${profile_path}`
+                    : placeholder
+                }
+                alt={name}
+                width="150px"
+                height="225px"
+              />
               <ActorName>{name}</ActorName>
               <Text>{character}</Text>
             </CardActor>
@@ -35,3 +36,14 @@ const CastList = ({ actors }) => {
 };
 
 export default CastList;
+
+CastList.propTypes = {
+  actors: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      profile_path: PropTypes.string,
+      name: PropTypes.string.isRequired,
+      character: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+};

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import SearchBar from "components/SearchBar/SearchBar";
-import fetchMovies from "servises/fetchMovies";
-import MovieList from "components/MovieList/MovieList";
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import SearchBar from 'components/SearchBar/SearchBar';
+import fetchMovies from 'servises/fetchMovies';
+import MovieList from 'components/MovieList/MovieList';
 import toast, { Toaster } from 'react-hot-toast';
 import { RotatingLines } from 'react-loader-spinner';
 
@@ -13,29 +13,25 @@ const Movies = () => {
   const query = searchParams.get('query') ?? '';
   const [load, setLoad] = useState(false);
 
-
-  useEffect(()=> {
-    const fetch = async ()=>{
-      if(query === '') {
+  useEffect(() => {
+    const fetch = async () => {
+      if (query === '') {
         return;
       }
       setLoad(true);
       try {
         const dataMovies = await fetchMovies(
           `https://api.themoviedb.org/3/search/movie?api_key=9218a8fe57d9a10810e7b861ea45534f&language=en-US&query=${query}&page=1&include_adult=false`
-          );
-      
+        );
+
         const movies = dataMovies.results;
 
         if (movies.length === 0) {
-          toast.error(
-            `Sorry, the movies you requested: ${query} not found.`
-          );
+          toast.error(`Sorry, the movies you requested: ${query} not found.`);
         }
-      
+
         setMoviesSearch(movies);
-        setInputValue('');      
-      
+        setInputValue('');
       } catch (error) {
         console.log(error);
       } finally {
@@ -43,34 +39,34 @@ const Movies = () => {
       }
     };
 
-  fetch(); 
+    fetch();
+  }, [query]);
 
-  },[query]);
-  
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (inputValue.trim() === "") {
+    if (inputValue.trim() === '') {
       toast.error('Fill in the search field');
       return;
     }
-    const normalizedValue = event.target.element.query.value.toLowerCase();
-    const nextSearchParams = inputValue !== "" ? {query: normalizedValue} : {};
+    const normalizedValue = event.target.elements.query.value.toLowerCase();
+    const nextSearchParams =
+      inputValue !== '' ? { query: normalizedValue } : {};
     setSearchParams(nextSearchParams);
   };
 
   return (
     <>
-    <section>
-      <div>
-        <SearchBar 
-        handleSubmit={handleSubmit}
-        value={inputValue}
-        setInputValue={setInputValue}
-        />
-      <MovieList movies={moviesSearch} />  
-      </div>
-      {load && (
+      <section>
+        <div>
+          <SearchBar
+            handleSubmit={handleSubmit}
+            value={inputValue}
+            setInputValue={setInputValue}
+          />
+          <MovieList movies={moviesSearch} />
+        </div>
+        {load && (
           <RotatingLines
             strokeColor="rgb(11, 127, 171)"
             strokeWidth="5"
@@ -79,8 +75,8 @@ const Movies = () => {
             visible={true}
           />
         )}
-    </section>
-    <Toaster
+      </section>
+      <Toaster
         position="top-right"
         reverseOrder={false}
         toastOptions={{
@@ -91,8 +87,7 @@ const Movies = () => {
         }}
       />
     </>
-  )
-
+  );
 };
 
 export default Movies;

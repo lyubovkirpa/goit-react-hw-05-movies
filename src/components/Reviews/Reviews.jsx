@@ -29,6 +29,7 @@ const Reviews = () => {
         if (reviews.length === 0) {
           toast.error(`No reviews.`);
         }
+        
         setReviews(reviews);
 
       } catch (error) {

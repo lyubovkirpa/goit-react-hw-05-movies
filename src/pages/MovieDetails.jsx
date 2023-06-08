@@ -1,8 +1,8 @@
-import { useParams, Outlet, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import fetchMovies from "servises/fetchMovies";
-import MovieItem from "components/MovieItem/MovieItem";
-import { Toaster } from "react-hot-toast";
+import { useParams, Outlet, useNavigate } from 'react-router-dom';
+import { useState, useEffect, Suspense} from 'react';
+import fetchMovies from 'servises/fetchMovies';
+import MovieItem from 'components/MovieItem/MovieItem';
+import { Toaster } from 'react-hot-toast';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
@@ -10,7 +10,7 @@ const MovieDetails = () => {
   const { movieId } = useParams();
   const navigate = useNavigate();
 
-  useEffect(()=> {
+  useEffect(() => {
     const fetch = async () => {
       try {
         const dataMovie = await fetchMovies(
@@ -24,17 +24,17 @@ const MovieDetails = () => {
     };
 
     fetch();
-
-  },[movieId, navigate]);
+  }, [movieId, navigate]);
 
   if (!movie) {
     return null;
   }
 
   return (
-    <div>
-       {movie && <MovieItem movie={movie} />}
-       <Toaster
+    <>
+      {movie && <MovieItem movie={movie} />}
+
+      <Toaster
         position="top-right"
         reverseOrder={false}
         toastOptions={{
@@ -44,9 +44,11 @@ const MovieDetails = () => {
           },
         }}
       />
-      <Outlet />  
-    </div>
-  )
+      <Suspense fallback={null}>
+        <Outlet />
+      </Suspense>
+    </>
+  );
 };
 
 export default MovieDetails;

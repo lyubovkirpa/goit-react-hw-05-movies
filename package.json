@@ -22,6 +22,7 @@
     "route": "^0.2.5",
     "routes": "^2.1.0",
     "styled-components": "5.3.5",
+    "suspense": "^0.0.38",
     "use-location-state": "^3.1.2",
     "web-vitals": "^2.1.3"
   },

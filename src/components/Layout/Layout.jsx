@@ -1,15 +1,20 @@
 import { Outlet } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import { Page } from './Layout.styled';
+import { Suspense } from 'react';
+
 
 const Layout = () => {
   return (
-    <div>
+    <>
       <Header />
-      <Page>
-        <Outlet />
-      </Page>
-    </div>
+
+      <Suspense fallback={null}>
+        <Page>
+          <Outlet />
+        </Page>
+      </Suspense>
+    </>
   );
 };
 

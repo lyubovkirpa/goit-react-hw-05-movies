@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { RevList, RevItem, RevName, RevText } from "./ReviewList.styled";
 
 const ReviewList = ({ reviews }) => {
@@ -18,3 +19,13 @@ const ReviewList = ({ reviews }) => {
 };
 
 export default ReviewList;
+
+ReviewList.propTypes = {
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+};
